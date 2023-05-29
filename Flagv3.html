@@ -6,31 +6,29 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<header>
-    <div class="nav_container">
-        <img src="logo.png" alt="logo" class="logo">
-        <nav>
-            <ul>
-                <li><a href="#">Flags</a></li>
-                <li><a href="#" class="padding">Subject2</a></li>
-                <li><a href="#" class="padding">Subject3</a></li>
-            </ul>
-        </nav>
-
-
-    </div>
-
-</header>
 
 
 <body>
+    <header>
+        <div class="nav_container">
+            <img src="whatdaflagbanner.png" alt="logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Flag Quiz</a></li>
+                    <li><a href="flag_gallery.html" class="padding">Study Mode</a></li>
+                    <li><a href="#" class="padding">Leaderboards</a></li>
+                </ul>
+            </nav>
+
+
+        </div>
+
+    </header>
     <div class="flag_zone_background" id="flag_zone">
-        <div style="display: flex;">
+        <div>
             <div>
-                <h2 id='currentscore'>0</h1>
-                    <h2 id='highscore'>0</h1>
-            </div>
-            <div class="center_block">
+                <h2 id='currentscore'>0</h2>
+                <h2 id='highscore'>0</h2>
             </div>
             <div id="image-container"></div>
             <section id="lives_hearts" class="lives_hearts"></section>
@@ -62,7 +60,9 @@
         </div>
 
     </div>
-
+    <a href="#" class="fast">
+        <img src="fast.png" alt="Fast Mode" class="fast-image" onclick="fast_mode()" id="fast_image">
+    </a>
     <script src="script_new.js"></script>
 </body>
 

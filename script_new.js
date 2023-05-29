@@ -312,6 +312,7 @@ current_key = 0;
 finished_list = createdificultyList()
 current_flag_file = 'flags/' + keys[finished_list[current_key]];
 
+fast = 0;
 correct = 0;
 fail = 0;
 user_life = 1;
@@ -469,8 +470,12 @@ function checkInput() {
     button2.disabled = true;
     button3.disabled = true;
     button4.disabled = true;
-    sleep(2000).then(() => { refreshPage() });
 
+    if (fast === 0) {
+        sleep(2000).then(() => { refreshPage() });
+    } else {
+        refreshPage()
+    }
 }
 
 var flag_dictionary = {
@@ -790,4 +795,15 @@ const scoreDisplay = document.getElementById('scoreDisplay');
 
 function try_again() {
     overlayContainer.style.display = 'none';
+}
+
+const fast_image = document.getElementById('fast_image')
+function fast_mode() {
+    if (fast === 0) {
+        fast = 1;
+        fast_image.src = 'fast_active.png'
+    } else {
+        fast = 0;
+        fast_image.src = 'fast.png'
+    }
 }

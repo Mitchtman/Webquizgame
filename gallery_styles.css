@@ -1,0 +1,23 @@
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-line {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 100px;
+    width: 100%;
+}
+
+img {
+    margin: 5px;
+    width: auto;
+    height: 100%;
+}
+
+.caption {
+    text-align: center;
+    margin-top: 5px;
+}

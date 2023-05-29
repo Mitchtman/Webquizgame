@@ -11,6 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 30vh;
+    margin: -100px auto 0;
 }
 
 #image-container img {
@@ -44,7 +45,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: rgb(26, 25, 25);
-    color: white;
+    color: #FF8200;
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 40px;
@@ -52,40 +53,35 @@ body {
 
 .nav_container {
     width: 100%;
-    margin: 0 auto;
 
 }
 
 header {
-    background: #55d6aa;
+    background: #11111F;
 }
 
 header::after {
     content: '';
-    display: table;
+    display: flex;
     clear: both;
 }
 
 .logo {
     float: left;
-    width: 75px;
+    width: 200px;
     height: auto;
-}
-
-nav {
-    align-items: center;
 }
 
 nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    text-align: center;
+    float: right;
+    margin-right: 50px;
 }
 
 nav li {
     display: inline-block;
-
     padding-top: 25px;
 }
 
@@ -94,7 +90,7 @@ nav li {
 }
 
 nav ul>li>a {
-    color: #444;
+    color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 14px;
@@ -102,11 +98,11 @@ nav ul>li>a {
 }
 
 nav a:hover {
-    color: 000;
+    color: #FF8200;
 }
 
 button.selected {
-    background-color: rgba(250, 187, 52, 0.918);
+    background-color: #FF8200;
 }
 
 .button {
@@ -131,12 +127,10 @@ button.selected {
 
 button:hover {
     cursor: pointer;
-    background-color: rgba(250, 187, 52, 0.918);
+    background-color: #FF8200;
 }
 
-.center_block {
-    margin-left: 565px;
-}
+
 
 .submit {
     padding-top: 50px;
@@ -151,6 +145,7 @@ button:hover {
 
 .lives_hearts {
     padding-top: 25px;
+    margin: -300px auto 0;
 }
 
 #overlayContainer {
@@ -190,4 +185,16 @@ button:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.fast {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+}
+
+.fast-image {
+    width: 40px;
+    height: 40px;
 }
