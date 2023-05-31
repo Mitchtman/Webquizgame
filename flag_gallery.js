@@ -259,30 +259,33 @@ const gallery = document.getElementById('gallery');
 let imageCount = 0;
 let currentLine = null;
 
-for (const key in flag_dictionary) {
-    if (flag_dictionary.hasOwnProperty(key)) {
-        const imagePath = 'flags/' + key;
-        const countryName = flag_dictionary[key];
+function show_flags() {
+    for (const key in flag_dictionary) {
+        if (flag_dictionary.hasOwnProperty(key)) {
+            const imagePath = 'flags/' + key;
+            const countryName = flag_dictionary[key];
 
-        const imageElement = document.createElement('img');
-        imageElement.src = imagePath;
+            const imageElement = document.createElement('img');
+            imageElement.src = imagePath;
 
-        const captionElement = document.createElement('div');
-        captionElement.textContent = countryName;
-        captionElement.className = 'caption'; // Add the 'caption' class
+            const captionElement = document.createElement('div');
+            captionElement.textContent = countryName;
+            captionElement.className = 'caption';
 
-        const imageContainer = document.createElement('div');
-        imageContainer.className = 'image-container';
-        imageContainer.appendChild(imageElement);
-        imageContainer.appendChild(captionElement);
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'image-container';
+            imageContainer.appendChild(imageElement);
+            imageContainer.appendChild(captionElement);
 
-        if (imageCount % 4 === 0) {
-            currentLine = document.createElement('div');
-            currentLine.className = 'image-line';
-            gallery.appendChild(currentLine);
+            if (imageCount % 4 === 0) {
+                currentLine = document.createElement('div');
+                currentLine.className = 'image-line';
+                gallery.appendChild(currentLine);
+            }
+
+            currentLine.appendChild(imageContainer);
+            imageCount++;
         }
-
-        currentLine.appendChild(imageContainer);
-        imageCount++;
     }
 }
+show_flags()

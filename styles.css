@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background: skyblue;
+    background-image: linear-gradient(45deg, #11111F, #2e2e8d, #11111F);
     font-weight: 300;
     justify-content: center;
     align-items: center;
@@ -44,11 +44,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(26, 25, 25);
-    color: #FF8200;
+    background-image: linear-gradient(45deg, #FF8000, #FFC000, #FF8000);
+    color: #ffffff;
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 40px;
+    border: 5px solid black;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
 }
 
 .nav_container {
@@ -83,6 +85,7 @@ nav ul {
 nav li {
     display: inline-block;
     padding-top: 25px;
+
 }
 
 .padding {
@@ -111,14 +114,19 @@ button.selected {
     height: 150px;
     background-color: #ccc;
     border: none;
+    font-family: Arial, sans-serif;
     text-align: center;
     line-height: 50px;
     margin-bottom: 20px;
     margin-left: 20px;
-    font-size: 40px;
+    font-size: 60px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: white;
+    border: 4px solid black;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+
 }
 
 .gold-border {
@@ -127,20 +135,20 @@ button.selected {
 
 button:hover {
     cursor: pointer;
-    background-color: #FF8200;
+    background-image: linear-gradient(45deg, #FF8000, #FFC000, #FF8000);
 }
 
 
 
 .submit {
-    padding-top: 50px;
-    background-color: skyblue;
+    padding-top: 45px;
     border: 10px blue;
 }
 
 .flag_zone_background {
-    background: #ada8a8;
-    padding-top: 20px;
+    background: linear-gradient(45deg, #b4f5b4, #FFC000, #b4f5b4);
+    padding-top: 10px;
+
 }
 
 .lives_hearts {
@@ -197,4 +205,20 @@ button:hover {
 .fast-image {
     width: 40px;
     height: 40px;
+}
+
+.score {
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    color: #ffffff;
+    padding-left: 10px;
+}
+
+.high_score {
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    color: #ffffff;
+    padding-left: 10px;
+}
+
+.name_input {
+    padding-bottom: 5px;
 }

@@ -14,7 +14,7 @@
             <img src="whatdaflagbanner.png" alt="logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="#">Flag Quiz</a></li>
+                    <li><a href="Flagv3.html">Flag Quiz</a></li>
                     <li><a href="flag_gallery.html" class="padding">Study Mode</a></li>
                     <li><a href="#" class="padding">Leaderboards</a></li>
                 </ul>
@@ -27,15 +27,19 @@
     <div class="flag_zone_background" id="flag_zone">
         <div>
             <div>
-                <h2 id='currentscore'>0</h2>
-                <h2 id='highscore'>0</h2>
+                <h2 id='currentscore' class="score">0</h2>
+                <h2 id='highscore' class="high_score">0</h2>
             </div>
             <div id="image-container"></div>
             <section id="lives_hearts" class="lives_hearts"></section>
-            <div id="overlayContainer"> <!-- Game Over -->
+            <div id="overlayContainer"> <!-- Game Over Pop Up -->
                 <div id="overlayContent">
-                    <h1 id="new_high_score"><br> HIGH SCORE!</h1>
+                    <h1 id="new_high_score"><br> NEW HIGH SCORE!</h1>
                     <h2 id="scoreDisplay"></h2>
+                    <br>
+                    <section class="name_input">
+                        <input type="text" placeholder="Enter your name" id="name_input" required>
+                    </section>
                     <br>
                     <button id="submit_score" class="end_button" type="button">Submit Score</button>
                     <button id="try_again" class="end_button" type="button" onclick="try_again()">Try Again</button>
@@ -45,7 +49,6 @@
         <h2 class="instruction">Which country's flag is this?</h2>
     </div>
 
-    <p id="message" class="message"></p>
 
 
     <div class="submit">
@@ -61,7 +64,7 @@
 
     </div>
     <a href="#" class="fast">
-        <img src="fast.png" alt="Fast Mode" class="fast-image" onclick="fast_mode()" id="fast_image">
+        <img src="normal_speed.png" alt="Fast Mode" class="fast-image" onclick="fast_mode()" id="fast_image">
     </a>
     <script src="script_new.js"></script>
 </body>

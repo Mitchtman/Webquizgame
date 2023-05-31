@@ -304,7 +304,7 @@ const button1 = document.getElementById('button1');
 const button2 = document.getElementById('button2');
 const button3 = document.getElementById('button3');
 const button4 = document.getElementById('button4');
-
+const button_elements = [button1, button2, button3, button4];
 
 //make a variable to point to the directory of the image
 keys = Object.keys(population_dictionary);
@@ -336,6 +336,8 @@ imageElement.src = String(current_flag_file);
 
 // Add the image element to the image container
 imageContainer.appendChild(imageElement);
+
+
 
 //making the heart images
 function display_lives() {
@@ -374,8 +376,6 @@ function refreshPage() {
     //document.getElementById('inputText').value = '';
     imageContainer.removeChild(imageElement);
     current_key = current_key + 1;
-    var messageElement = document.getElementById('message');
-    messageElement.textContent = ''
     document.body.style.backgroundColor = 'skyblue';
     document.getElementById("flag_zone").style.backgroundColor = "#ada8a8";
     button1.disabled = false;
@@ -420,6 +420,7 @@ function refreshPage() {
     current_flag_file = 'flags/' + keys[finished_list[current_key]];
     imageElement.src = String(current_flag_file);
     imageContainer.appendChild(imageElement);
+    document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #b4f5b4, #FFC000, #b4f5b4)";
 
     //set button variables
     randomKeys = getRandomKeys(flag_dictionary, 3);
@@ -428,11 +429,20 @@ function refreshPage() {
     button2.innerText = sortedList[1].toString();
     button3.innerText = sortedList[2].toString();
     button4.innerText = sortedList[3].toString();
+    //remove the red background if answer was wrong
+    for (var i = 0; i < button_elements.length; i++) {
+        var button = button_elements[i];
+
+
+        button.style.background = "";
+
+
+        if (button.classList.contains("gold-border")) {
+            button.classList.remove("gold-border");
+        }
+    }
     if (selectedButton) {
         selectedButton.classList.remove('selected');
-    }
-    if (selectedButton.classList.contains("gold-border")) {
-        selectedButton.classList.remove("gold-border");
     }
 }
 
@@ -440,9 +450,6 @@ function checkInput() {
     event.preventDefault();
     var userInput = selectedButton.innerText;
     //var userInput = document.getElementById('inputText').value;
-    var messageElement = document.getElementById('message');
-    var submitButton = document.getElementById('submitButton');
-    var retryButton = document.getElementById('retryButton');
 
     var score = 0;
     var flag_name = checkKey();
@@ -457,13 +464,19 @@ function checkInput() {
     var matchPercentage = (score / flag_name.length) * 100;
     if (matchPercentage > 80) {
         selectedButton.classList.add("gold-border");
-        document.getElementById("flag_zone").style.backgroundColor = '#b4f5b4';
-        messageElement.textContent = 'You are correct!';
+        document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #278a27, #4dff4d, #278a27)";
         correct = 1;
     } else {
-        messageElement.textContent = flag_name;
-        document.getElementById("flag_zone").style.backgroundColor = 'red';
+        document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #4c0106, #f03232, #4c0106)";
         fail = 1;
+        for (var i = 0; i < button_elements.length; i++) {
+            var button = button_elements[i];
+
+            if (button.innerText.trim() === flag_name) {
+                button.style.background = "linear-gradient(45deg, #4c0106, #f03232, #4c0106)";
+                button.classList.add("gold-border");
+            }
+        }
     }
 
     button1.disabled = true;
@@ -471,7 +484,7 @@ function checkInput() {
     button3.disabled = true;
     button4.disabled = true;
 
-    if (fast === 0) {
+    if (fast === 0 || fail === 1) {
         sleep(2000).then(() => { refreshPage() });
     } else {
         refreshPage()
@@ -801,9 +814,9 @@ const fast_image = document.getElementById('fast_image')
 function fast_mode() {
     if (fast === 0) {
         fast = 1;
-        fast_image.src = 'fast_active.png'
+        fast_image.src = 'fast_speed.png'
     } else {
         fast = 0;
-        fast_image.src = 'fast.png'
+        fast_image.src = 'normal_speed.png'
     }
 }
