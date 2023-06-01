@@ -222,3 +222,7 @@ button:hover {
 .name_input {
     padding-bottom: 5px;
 }
+
+.enter_name {
+    text-align: center;
+}

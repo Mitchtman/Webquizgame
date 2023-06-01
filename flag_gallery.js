@@ -259,23 +259,34 @@ const gallery = document.getElementById('gallery');
 let imageCount = 0;
 let currentLine = null;
 
-function show_flags() {
+
+function filterImages() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const gallery = document.getElementById('gallery');
+
+    // Clear the gallery before updating the images
+    gallery.innerHTML = '';
+
+    let imageCount = 0;
+    let currentLine = null;
+
     for (const key in flag_dictionary) {
         if (flag_dictionary.hasOwnProperty(key)) {
-            const imagePath = 'flags/' + key;
-            const countryName = flag_dictionary[key];
+            const countryName = flag_dictionary[key].toLowerCase();
+
+            // Check if the search input matches the country name
+            if (searchInput !== '' && !countryName.includes(searchInput)) {
+                continue;
+            }
+
+            const imagePath = "flags/" + key;
 
             const imageElement = document.createElement('img');
             imageElement.src = imagePath;
 
             const captionElement = document.createElement('div');
-            captionElement.textContent = countryName;
+            captionElement.textContent = flag_dictionary[key];
             captionElement.className = 'caption';
-
-            const imageContainer = document.createElement('div');
-            imageContainer.className = 'image-container';
-            imageContainer.appendChild(imageElement);
-            imageContainer.appendChild(captionElement);
 
             if (imageCount % 4 === 0) {
                 currentLine = document.createElement('div');
@@ -283,9 +294,13 @@ function show_flags() {
                 gallery.appendChild(currentLine);
             }
 
-            currentLine.appendChild(imageContainer);
+            const imageWrapper = document.createElement('div');
+            imageWrapper.className = 'image-wrapper';
+            imageWrapper.appendChild(imageElement);
+            imageWrapper.appendChild(captionElement);
+            currentLine.appendChild(imageWrapper);
             imageCount++;
         }
     }
 }
-show_flags()
+filterImages()
