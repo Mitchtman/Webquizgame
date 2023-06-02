@@ -1,50 +1,3 @@
-const imageContainer = document.querySelector('#image-container');
-const lives_hearts = document.querySelector('#lives_hearts');
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function easyList() {
-    // Generate the initial list from 0 to 24
-    var list = Array.from({ length: 25 }, (_, index) => index);
-
-    // Shuffle the list using Fisher-Yates algorithm
-    for (var i = list.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = list[i];
-        list[i] = list[j];
-        list[j] = temp;
-    }
-    return list
-}
-
-function createdificultyList() {
-    var easylist = [];
-    var mediumlist = [];
-    var hardlist = [];
-    for (var i = 0; i <= 24; i++) {
-        easylist.push(i);
-    }
-    easylist.sort(function (a, b) {
-        return 0.5 - Math.random();
-    });
-    for (var i = 25; i <= 100; i++) {
-        mediumlist.push(i);
-    }
-    mediumlist.sort(function (a, b) {
-        return 0.5 - Math.random();
-    });
-    for (var i = 101; i <= 256; i++) {
-        hardlist.push(i);
-    }
-    hardlist.sort(function (a, b) {
-        return 0.5 - Math.random();
-    });
-    var finished_list = easylist.concat(mediumlist, hardlist);
-    return finished_list
-}
-
 var population_dictionary = {
     'cn.png': 1439324,
     'in.png': 1380004,
@@ -296,200 +249,7 @@ var population_dictionary = {
     'tw.png': 0,
     'um.png': 0,
     'xk.png': 0
-}
-
-
-//buttons
-const button1 = document.getElementById('button1');
-const button2 = document.getElementById('button2');
-const button3 = document.getElementById('button3');
-const button4 = document.getElementById('button4');
-const button_elements = [button1, button2, button3, button4];
-
-//make a variable to point to the directory of the image
-keys = Object.keys(population_dictionary);
-current_key = 0;
-finished_list = createdificultyList()
-current_flag_file = 'flags/' + keys[finished_list[current_key]];
-
-fast = 0;
-correct = 0;
-fail = 0;
-user_life = 1;
-const livesElement = document.getElementById("lives")
-
-
-current_score = 0;
-const currentscoreElement = document.getElementById("currentscore")
-currentscoreElement.textContent = 'CURRENT SCORE: ' + current_score;
-
-user_high_score = 0;
-const hishscoreElement = document.getElementById("highscore")
-hishscoreElement.textContent = 'HIGH SCORE: ' + user_high_score;
-
-// Create a new image element
-imageElement = document.createElement('img');
-const lifeElement = document.createElement('img');
-
-// Set the source of the image element to a random image filename
-imageElement.src = String(current_flag_file);
-
-// Add the image element to the image container
-imageContainer.appendChild(imageElement);
-
-
-
-//making the heart images
-function display_lives() {
-    const lives_hearts = document.querySelector('#lives_hearts');
-    const lifeElementSrc = 'heart.png';
-    const numberOfLifeElements = user_life;
-    const lifeElementWidth = 50;
-    const spaceBetweenElements = 5;
-    const containerWidth = numberOfLifeElements * (lifeElementWidth + spaceBetweenElements);
-
-    lives_hearts.style.width = containerWidth + "px";
-    lives_hearts.style.position = "fixed";
-    lives_hearts.style.right = "0";
-
-    for (let i = 0; i < numberOfLifeElements; i++) {
-        const lifeElement = document.createElement("img");
-        lifeElement.src = lifeElementSrc;
-        lifeElement.style.width = lifeElementWidth + "px";
-        lifeElement.style.height = "auto";
-        lifeElement.style.marginLeft = (spaceBetweenElements * i) + "px";
-
-        lives_hearts.appendChild(lifeElement);
-    }
-}
-display_lives()
-
-function removeLifeElements() {
-    const lives_hearts = document.querySelector('#lives_hearts');
-
-    while (lives_hearts.firstChild) {
-        lives_hearts.removeChild(lives_hearts.firstChild);
-    }
-}
-
-function refreshPage() {
-    //document.getElementById('inputText').value = '';
-    imageContainer.removeChild(imageElement);
-    current_key = current_key + 1;
-    document.body.style.backgroundColor = 'skyblue';
-    document.getElementById("flag_zone").style.backgroundColor = "#ada8a8";
-    button1.disabled = false;
-    button2.disabled = false;
-    button3.disabled = false;
-    button4.disabled = false;
-    //Update scores
-    if (correct === 1) {
-        current_score = current_score + 1;
-        currentscoreElement.textContent = 'CURRENT SCORE: ' + current_score;
-        correct = 0;
-        //Update lives
-        if ((current_score % 10 === 0 || current_score === 5) && user_life < 5) {
-            user_life = user_life + 1;
-            removeLifeElements()
-            display_lives()
-        }
-    } else if (fail === 1 && user_life != 1) {
-        user_life = user_life - 1;
-        fail = 0;
-        removeLifeElements()
-        display_lives()
-    } else if (fail === 1 && user_life === 1) {
-        //game over
-        last_score = current_score;
-        current_score = 0;
-        current_key = 0;
-        if (last_score === user_high_score && last_score !== 0) {
-            overlayContainer.style.display = 'block';
-            scoreDisplay.textContent = 'Your Score: ' + last_score;
-        }
-        fail = 0;
-        currentscoreElement.textContent = 'CURRENT SCORE: ' + current_score;
-        finished_list = createdificultyList()
-    }
-    // update high score
-    if (current_score > user_high_score) {
-        user_high_score = current_score;
-        hishscoreElement.textContent = 'HIGH SCORE: ' + user_high_score;
-    }
-    //update showing flag
-    current_flag_file = 'flags/' + keys[finished_list[current_key]];
-    imageElement.src = String(current_flag_file);
-    imageContainer.appendChild(imageElement);
-    document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #b4f5b4, #FFC000, #b4f5b4)";
-
-    //set button variables
-    randomKeys = getRandomKeys(flag_dictionary, 3);
-    sortedList = randomKeys.sort(randomSort);
-    button1.innerText = sortedList[0].toString();
-    button2.innerText = sortedList[1].toString();
-    button3.innerText = sortedList[2].toString();
-    button4.innerText = sortedList[3].toString();
-    //remove the red background if answer was wrong
-    for (var i = 0; i < button_elements.length; i++) {
-        var button = button_elements[i];
-
-
-        button.style.background = "";
-
-
-        if (button.classList.contains("gold-border")) {
-            button.classList.remove("gold-border");
-        }
-    }
-    if (selectedButton) {
-        selectedButton.classList.remove('selected');
-    }
-}
-
-function checkInput() {
-    event.preventDefault();
-    var userInput = selectedButton.innerText;
-    //var userInput = document.getElementById('inputText').value;
-
-    var score = 0;
-    var flag_name = checkKey();
-    var minLength = Math.min(userInput.length, flag_name.length);
-
-    for (var i = 0; i < minLength; i++) {
-        if (userInput[i].toLowerCase() === flag_name[i].toLowerCase()) {
-            score++;
-        }
-    }
-
-    var matchPercentage = (score / flag_name.length) * 100;
-    if (matchPercentage > 80) {
-        selectedButton.classList.add("gold-border");
-        document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #278a27, #4dff4d, #278a27)";
-        correct = 1;
-    } else {
-        document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #4c0106, #f03232, #4c0106)";
-        fail = 1;
-        for (var i = 0; i < button_elements.length; i++) {
-            var button = button_elements[i];
-
-            if (button.innerText.trim() === flag_name) {
-                button.style.background = "linear-gradient(45deg, #4c0106, #f03232, #4c0106)";
-                button.classList.add("gold-border");
-            }
-        }
-    }
-
-    button1.disabled = true;
-    button2.disabled = true;
-    button3.disabled = true;
-    button4.disabled = true;
-
-    if (fast === 0 || fail === 1) {
-        sleep(2000).then(() => { refreshPage() });
-    } else {
-        refreshPage()
-    }
-}
+};
 
 var flag_dictionary = {
     'ad.png': 'Andorra',
@@ -748,6 +508,258 @@ var flag_dictionary = {
     'zw.png': 'Zimbabwe'
 }
 
+
+const imageContainer = document.querySelector('#image-container');
+const lives_hearts = document.querySelector('#lives_hearts');
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function easyList() {
+    // Generate the initial list from 0 to 24
+    var list = Array.from({ length: 25 }, (_, index) => index);
+
+    // Shuffle the list using Fisher-Yates algorithm
+    for (var i = list.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = list[i];
+        list[i] = list[j];
+        list[j] = temp;
+    }
+    return list
+}
+
+function createdificultyList() {
+    var easylist = [];
+    var mediumlist = [];
+    var hardlist = [];
+    for (var i = 0; i <= 24; i++) {
+        easylist.push(i);
+    }
+    easylist.sort(function (a, b) {
+        return 0.5 - Math.random();
+    });
+    for (var i = 25; i <= 100; i++) {
+        mediumlist.push(i);
+    }
+    mediumlist.sort(function (a, b) {
+        return 0.5 - Math.random();
+    });
+    for (var i = 101; i <= 256; i++) {
+        hardlist.push(i);
+    }
+    hardlist.sort(function (a, b) {
+        return 0.5 - Math.random();
+    });
+    var finished_list = easylist.concat(mediumlist, hardlist);
+    return finished_list
+}
+
+
+
+
+//buttons
+const button1 = document.getElementById('button1');
+const button2 = document.getElementById('button2');
+const button3 = document.getElementById('button3');
+const button4 = document.getElementById('button4');
+const button_elements = [button1, button2, button3, button4];
+
+//make a variable to point to the directory of the image
+keys = Object.keys(population_dictionary);
+current_key = 0;
+finished_list = createdificultyList()
+current_flag_file = 'flags/' + keys[finished_list[current_key]];
+
+fast = 0;
+correct = 0;
+fail = 0;
+user_life = 1;
+const livesElement = document.getElementById("lives")
+
+
+current_score = 0;
+const currentscoreElement = document.getElementById("currentscore")
+currentscoreElement.textContent = 'CURRENT SCORE: ' + current_score;
+
+user_high_score = 0;
+const hishscoreElement = document.getElementById("highscore")
+hishscoreElement.textContent = 'HIGH SCORE: ' + user_high_score;
+
+// Create a new image element
+imageElement = document.createElement('img');
+const lifeElement = document.createElement('img');
+
+// Set the source of the image element to a random image filename
+imageElement.src = String(current_flag_file);
+
+// Add the image element to the image container
+imageContainer.appendChild(imageElement);
+
+
+
+//making the heart images
+function display_lives() {
+    const lives_hearts = document.querySelector('#lives_hearts');
+    const lifeElementSrc = 'heart.png';
+    const numberOfLifeElements = user_life;
+    const lifeElementWidth = 50;
+    const spaceBetweenElements = 5;
+    const containerWidth = numberOfLifeElements * (lifeElementWidth + spaceBetweenElements);
+
+    lives_hearts.style.width = containerWidth + "px";
+    lives_hearts.style.position = "fixed";
+    lives_hearts.style.right = "0";
+
+    for (let i = 0; i < numberOfLifeElements; i++) {
+        const lifeElement = document.createElement("img");
+        lifeElement.src = lifeElementSrc;
+        lifeElement.style.width = lifeElementWidth + "px";
+        lifeElement.style.height = "auto";
+        lifeElement.style.marginLeft = (spaceBetweenElements * i) + "px";
+
+        lives_hearts.appendChild(lifeElement);
+    }
+}
+display_lives()
+
+function removeLifeElements() {
+    const lives_hearts = document.querySelector('#lives_hearts');
+
+    while (lives_hearts.firstChild) {
+        lives_hearts.removeChild(lives_hearts.firstChild);
+    }
+}
+
+function refreshPage() {
+    //document.getElementById('inputText').value = '';
+    imageContainer.removeChild(imageElement);
+    current_key = current_key + 1;
+    document.body.style.backgroundColor = 'skyblue';
+    document.getElementById("flag_zone").style.backgroundColor = "#ada8a8";
+    button1.disabled = false;
+    button2.disabled = false;
+    button3.disabled = false;
+    button4.disabled = false;
+    //Update scores
+    if (correct === 1) {
+        current_score = current_score + 1;
+        currentscoreElement.textContent = 'CURRENT SCORE: ' + current_score;
+        correct = 0;
+        //Update lives
+        if ((current_score % 10 === 0 || current_score === 5) && user_life < 5) {
+            user_life = user_life + 1;
+            removeLifeElements()
+            display_lives()
+        }
+    } else if (fail === 1 && user_life != 1) {
+        user_life = user_life - 1;
+        fail = 0;
+        removeLifeElements()
+        display_lives()
+    } else if (fail === 1 && user_life === 1) {
+        //game over
+        last_score = current_score;
+        current_score = 0;
+        current_key = 0;
+        if (last_score === user_high_score && last_score !== 0) {
+            overlayContainer.style.display = 'block';
+            scoreDisplay.textContent = 'Your Score: ' + last_score;
+        }
+        fail = 0;
+        currentscoreElement.textContent = 'CURRENT SCORE: ' + current_score;
+        finished_list = createdificultyList()
+    }
+    // update high score
+    if (current_score > user_high_score) {
+        user_high_score = current_score;
+        hishscoreElement.textContent = 'HIGH SCORE: ' + user_high_score;
+    }
+    //update showing flag
+    current_flag_file = 'flags/' + keys[finished_list[current_key]];
+    imageElement.src = String(current_flag_file);
+    imageContainer.appendChild(imageElement);
+    document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #b4f5b4, #FFC000, #b4f5b4)";
+
+    //set button variables
+    randomKeys = getRandomKeys(flag_dictionary, 3);
+    sortedList = randomKeys.sort(randomSort);
+    button1.innerText = sortedList[0].toString();
+    button2.innerText = sortedList[1].toString();
+    button3.innerText = sortedList[2].toString();
+    button4.innerText = sortedList[3].toString();
+    //remove the red background if answer was wrong
+    for (var i = 0; i < button_elements.length; i++) {
+        var button = button_elements[i];
+
+
+        button.style.background = "";
+
+
+        if (button.classList.contains("gold-border")) {
+            button.classList.remove("gold-border");
+        }
+    }
+    if (selectedButton) {
+        selectedButton.classList.remove('selected');
+    }
+    button1answer = sortedList[0].toString()
+    button2answer = sortedList[1].toString()
+    button3answer = sortedList[2].toString()
+    button4answer = sortedList[3].toString()
+    adjustButtonText(button1);
+    adjustButtonText(button2);
+    adjustButtonText(button3);
+    adjustButtonText(button4);
+
+}
+
+function checkInput(userInput) {
+    event.preventDefault();
+
+    var score = 0;
+    var flag_name = checkKey();
+    var minLength = Math.min(userInput.length, flag_name.length);
+
+    for (var i = 0; i < minLength; i++) {
+        if (userInput[i].toLowerCase() === flag_name[i].toLowerCase()) {
+            score++;
+        }
+    }
+
+    var matchPercentage = (score / flag_name.length) * 100;
+    if (matchPercentage > 80) {
+        selectedButton.classList.add("gold-border");
+        document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #278a27, #4dff4d, #278a27)";
+        correct = 1;
+    } else {
+        document.getElementById("flag_zone").style.background = "linear-gradient(45deg, #4c0106, #f03232, #4c0106)";
+        fail = 1;
+        for (var i = 0; i < button_elements.length; i++) {
+            var button = button_elements[i];
+
+            if (button.innerText.trim() === flag_name) {
+                button.style.background = "linear-gradient(45deg, #4c0106, #f03232, #4c0106)";
+                button.classList.add("gold-border");
+            }
+        }
+    }
+
+    button1.disabled = true;
+    button2.disabled = true;
+    button3.disabled = true;
+    button4.disabled = true;
+
+    if (fast === 0 || fail === 1) {
+        sleep(2000).then(() => { refreshPage() });
+    } else {
+        refreshPage()
+    }
+}
+
+
+
 // Function to check if string matches a key in the dictionary
 function checkKey() {
     var flag_file_name = current_flag_file.replace("flags/", "")
@@ -765,10 +777,19 @@ function selectButton(buttonNumber) {
     if (selectedButton) {
         selectedButton.classList.remove('selected');
     }
-
+    users_answer = '';
     selectedButton = document.getElementById('button' + buttonNumber);
     selectedButton.classList.add('selected');
-    checkInput()
+    if (buttonNumber === 1) {
+        users_answer = button1answer
+    } else if (buttonNumber === 2) {
+        users_answer = button2answer
+    } else if (buttonNumber === 3) {
+        users_answer = button3answer
+    } else {
+        users_answer = button4answer
+    }
+    checkInput(users_answer)
 }
 
 
@@ -794,13 +815,56 @@ function randomSort(a, b) {
     return Math.random() - 0.5;
 }
 
-//set button variables
+// Set button variables
 randomKeys = getRandomKeys(flag_dictionary, 3);
 sortedList = randomKeys.sort(randomSort);
-button1.innerText = sortedList[0].toString();
-button2.innerText = sortedList[1].toString();
-button3.innerText = sortedList[2].toString();
-button4.innerText = sortedList[3].toString();
+
+function splitTextIntoRows(text) {
+    const maxLength = 16; // Maximum length of each row
+    const words = text.split(' ');
+    let row1 = '';
+    let row2 = '';
+
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        if (row1.length + word.length <= maxLength) {
+            row1 += word.trim() + ' ';
+        } else {
+            row2 += word.trim() + ' ';
+        }
+    }
+
+    return [row1.trim(), row2.trim()];
+}
+
+function adjustButtonText(button) {
+    const text = button.innerText;
+    const buttonContent = button.querySelector('.button-text');
+    if (text.length > 16) {
+        const [row1, row2] = splitTextIntoRows(text);
+        buttonContent.innerHTML = row1 + '<br>' + '<br>' + row2;
+        button.classList.add('two-rows');
+    } else {
+        buttonContent.innerHTML = `<br>${text}<br><br>`;
+        button.classList.remove('two-rows');
+    }
+}
+
+button1.innerHTML = '<span class="button-text">' + sortedList[0].toString() + '</span>';
+button2.innerHTML = '<span class="button-text">' + sortedList[1].toString() + '</span>';
+button3.innerHTML = '<span class="button-text">' + sortedList[2].toString() + '</span>';
+button4.innerHTML = '<span class="button-text">' + sortedList[3].toString() + '</span>';
+
+button1answer = sortedList[0].toString()
+button2answer = sortedList[1].toString()
+button3answer = sortedList[2].toString()
+button4answer = sortedList[3].toString()
+
+adjustButtonText(button1);
+adjustButtonText(button2);
+adjustButtonText(button3);
+adjustButtonText(button4);
+
 
 //game over
 const overlayContainer = document.getElementById('overlayContainer');

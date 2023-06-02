@@ -126,8 +126,9 @@ button.selected {
     color: white;
     border: 4px solid black;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-
+    line-height: 25px;
 }
+
 
 .gold-border {
     border: 2px solid gold;
