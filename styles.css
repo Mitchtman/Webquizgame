@@ -227,3 +227,9 @@ button:hover {
 .enter_name {
     text-align: center;
 }
+
+.two-rows {
+    text-align: center;
+    font-size: 50px;
+    overflow: visible;
+}
