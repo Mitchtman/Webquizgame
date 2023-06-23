@@ -126,7 +126,7 @@ button.selected {
     color: white;
     border: 4px solid black;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    line-height: 25px;
+    line-height: 20px;
 }
 
 
@@ -232,4 +232,8 @@ button:hover {
     text-align: center;
     font-size: 50px;
     overflow: visible;
+}
+
+.leaderboard {
+    color: #ffffff;
 }

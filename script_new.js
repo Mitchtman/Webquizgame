@@ -708,6 +708,10 @@ function refreshPage() {
     button2answer = sortedList[1].toString()
     button3answer = sortedList[2].toString()
     button4answer = sortedList[3].toString()
+    button1.innerHTML = '<span class="button-text">' + sortedList[0].toString() + '</span>';
+    button2.innerHTML = '<span class="button-text">' + sortedList[1].toString() + '</span>';
+    button3.innerHTML = '<span class="button-text">' + sortedList[2].toString() + '</span>';
+    button4.innerHTML = '<span class="button-text">' + sortedList[3].toString() + '</span>';
     adjustButtonText(button1);
     adjustButtonText(button2);
     adjustButtonText(button3);
@@ -883,4 +887,26 @@ function fast_mode() {
         fast = 0;
         fast_image.src = 'normal_speed.png'
     }
+}
+
+//to send to node to write to a text file
+function submit_score() {
+    const user_name = document.getElementById('name_input').value;
+    fetch('http://localhost:3000/submit_score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_name, user_high_score })
+    })
+        .then((response) => {
+            if (response.ok) {
+                console.log('Score submitted successfully');
+            } else {
+                console.error('Failed to submit score');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
