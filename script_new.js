@@ -892,6 +892,18 @@ function fast_mode() {
 //to send to node to write to a text file
 function submit_score() {
     const user_name = document.getElementById('name_input').value;
+    if (user_name === '') {
+        alert('Please enter your name');
+        return;
+    }
+    if (user_name.includes(':')) {
+        alert('Name cannot have \':\'');
+        return;
+    } else if (user_name.includes('|')) {
+        alert('Name cannot have \'|\'');
+        return;
+    }
+
     fetch('http://localhost:3000/submit_score', {
         method: 'POST',
         headers: {
@@ -909,4 +921,5 @@ function submit_score() {
         .catch((error) => {
             console.error('Error:', error);
         });
+    overlayContainer.style.display = 'none';
 }
