@@ -904,7 +904,7 @@ function submit_score() {
         return;
     }
 
-    fetch('http://localhost:3000/submit_score', {
+    fetch('https://app.whatdaflag.xyz/submit_score', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

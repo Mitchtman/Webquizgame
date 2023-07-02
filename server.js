@@ -8,7 +8,7 @@ const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Handle requests for the HTML file
-    if (req.url === '/Flagv3.html') {
+    if (req.url.includes('/Flagv3.html')) {
         const filePath = path.join(__dirname, 'Flagv3.html');
         fs.readFile(filePath, 'utf8', (err, html) => {
             if (err) {
@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
             res.end(html);
         });
     } else if (req.url === '/get_leaderboard') {
-        const filePath = path.join(__dirname, 'leaderboard/leaderboard.txt');
+        const filePath = path.join(__dirname, '/home/whatdafl/app.whatdaflag.xyz/leaderboard');
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 res.statusCode = 500;
